@@ -1,0 +1,120 @@
+<script type="text/javascript" >
+    /**
+     * Submit form
+     */
+    var submitForms = {};
+    function isSubmitForm(formSelector, newValue)
+    {
+        if (newValue !== undefined) {
+            submitForms[formSelector] = newValue;
+            return true;
+        }
+
+        return submitForms[formSelector] !== undefined && submitForms[formSelector] === true;
+    }
+    function submitForm(formSelector)
+    {
+        if (isSubmitForm(formSelector)) {
+            return;
+        }
+
+        isSubmitForm(formSelector, true);
+        $(formSelector).submit()
+    }
+
+    /**
+     * Send form
+     */
+    function sendForm(elements, formAttributes)
+    {
+        var formId = 'submit_post_form';
+        var defaultFormData = {
+            id     : formId,
+            method : 'post'
+        }
+
+        formAttributes = $.extend(
+                {},
+                defaultFormData,
+                formAttributes || {}
+        );
+
+        var formName = typeof formAttributes['name'] !== 'undefined' ? formAttributes['name'] : null;
+
+        var form  = '<form';
+        $.each(formAttributes, function(key, value){
+            form += ' ' + key + '="' + value + '"';
+        });
+        form  += '>';
+
+        $.each(elements, function(key, value){
+            var elementName = formName !== null ? formName + '[' + key + ']' : key;
+            form += '<input type="hidden" name="' + elementName + '" value="' + value + '" />';
+        });
+        form += '</form>';
+
+        $('body').prepend(form);
+        submitForm('#' + formId);
+    }
+
+    var actionButtonToken = '{{ csrf_token('action_button') }}';
+    var currentUrl        = '{{ app.request.uri }}';
+    $(document).ready(function(){
+        $('.action-button').click(function(){
+            var button = $(this);
+
+            var formName    = button.data('form-name') !== undefined ? button.data('form-name') : 'form';
+            var value       = button.data('value') !== undefined ? button.data('value') : null;
+            var actionName  = button.data('action-name');
+            var actionUrl   = button.data('action-url');
+            var redirectUrl = button.data('redirect-url');
+            var method      = button.data('method') !== undefined ? button.data('form-name') : 'POST';
+            var token       = button.data('token');
+
+            // Check
+            if (actionName === undefined) {
+                return false;
+            }
+
+            if (token === undefined) {
+                token = actionButtonToken;
+            }
+
+            if (redirectUrl === undefined) {
+                redirectUrl = currentUrl;
+            }
+
+            /**
+             * Elements
+             */
+            var elements = {
+                value         : value,
+                _action_name  : actionName,
+                _token        : token
+            };
+
+            if (redirectUrl !== undefined) {
+                elements['_redirect_url'] = redirectUrl;
+            }
+
+            /**
+             *  Form attributes
+             */
+            var formAttributes = {
+                name: formName
+            };
+            if (actionUrl !== undefined) {
+                formAttributes['action'] = actionUrl;
+            }
+            if (method !== undefined) {
+                formAttributes['method'] = method;
+            }
+
+
+            button.button('loading');
+
+            // Send form
+            sendForm(elements, formAttributes);
+        });
+    });
+</script>

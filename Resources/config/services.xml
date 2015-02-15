@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="glavweb_action.listener.action.class">Glavweb\ActionBundle\EventListener\ActionListener</parameter>
+        <parameter key="glavweb_action.factory.action_form.class">Glavweb\ActionBundle\Factory\ActionFormFactory</parameter>
+        <parameter key="glavweb_action.action_handler.class">Glavweb\ActionBundle\Handler\ActionHandler</parameter>
+        <parameter key="glavweb_action.action_helper.class">Glavweb\ActionBundle\Helper\ActionHelper</parameter>
+        <parameter key="glavweb_action.action.form.class">Glavweb\ActionBundle\Action\FormAction</parameter>
+    </parameters>
+
+    <services>
+        <service id="glavweb_action.listener.action" class="%glavweb_action.listener.action.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+        </service>
+
+        <service id="glavweb_action.factory.action_form" class="%glavweb_action.factory.action_form.class%">
+            <argument type="service" id="form.factory" />
+        </service>
+
+        <service id="glavweb_action.action.form" class="%glavweb_action.action.form.class%">
+            <call method="setDoctrine">
+                <argument type="service" id="doctrine" />
+            </call>
+            <call method="setSecurityContext">
+                <argument type="service" id="security.context" />
+            </call>
+        </service>
+
+        <service id="glavweb_action.action_handler" class="%glavweb_action.action_handler.class%">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="glavweb_action.action_helper" class="%glavweb_action.action_helper.class%">
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="session" />
+            <argument type="service" id="router" />
+            <argument type="service" id="translator" />
+        </service>
+    </services>
+</container>

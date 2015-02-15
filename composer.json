@@ -1,0 +1,24 @@
+{
+    "name": "glavweb/action-bundle",
+    "description": "Symfony GlavwebActionBundle",
+    "authors": [
+        {
+            "name": "nilov",
+            "email": "nilov@glavweb.ru",
+            "homepage": "http://glavweb.ru"
+        },
+        {
+            "name": "Glavweb Community",
+            "homepage": "https://github.com/glavweb/GlavwebActionBundle/contributors"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": "~2.3",
+        "symfony/form": "~2.3",
+        "symfony/security": "~2.3",
+        "symfony/console": "~2.3"
+    },
+    "autoload": {
+        "psr-4": { "Glavweb\\ActionBundle\\": "" }
+    }
+}
