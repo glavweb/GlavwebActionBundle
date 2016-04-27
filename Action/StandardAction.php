@@ -3,7 +3,6 @@
 namespace Glavweb\ActionBundle\Action;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormTypeInterface;
@@ -23,11 +22,6 @@ abstract class StandardAction extends AbstractAction
     protected $doctrine;
 
     /**
-     * @var \Symfony\Component\Security\Core\SecurityContext
-     */
-    protected $securityContext;
-
-    /**
      * @var \Symfony\Component\Form\FormFactory
      */
     protected $formFactory;
@@ -36,22 +30,6 @@ abstract class StandardAction extends AbstractAction
      * @var FormTypeInterface
      */
     protected $formType;
-
-    /**
-     * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
-     */
-    public function setSecurityContext(SecurityContext $securityContext)
-    {
-        $this->securityContext = $securityContext;
-    }
-
-    /**
-     * @return \Symfony\Component\Security\Core\SecurityContext
-     */
-    public function getSecurityContext()
-    {
-        return $this->securityContext;
-    }
 
     /**
      * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine

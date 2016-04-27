@@ -59,5 +59,4 @@ class FormAction extends StandardAction
 
         return $success;
     }
-
 }

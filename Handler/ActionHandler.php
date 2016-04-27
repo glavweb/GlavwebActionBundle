@@ -2,20 +2,17 @@
 
 namespace Glavweb\ActionBundle\Handler;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Glavweb\ActionBundle\Options\ActionOptions;
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Glavweb\ActionBundle\Action\AbstractAction;
 
 /**
  * Class ActionHandler
  * @package Glavweb\ActionBundle\Handler
  */
-class ActionHandler extends ContainerAware
+class ActionHandler
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Request

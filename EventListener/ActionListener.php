@@ -4,9 +4,9 @@ namespace Glavweb\ActionBundle\EventListener;
 
 use Glavweb\ActionBundle\Action\AbstractAction;
 use Glavweb\ActionBundle\Options\ActionOptions;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
@@ -15,8 +15,10 @@ use Symfony\Component\Security\Csrf\CsrfTokenManager;
  * Class ActionListener
  * @package Glavweb\ActionBundle\EventListener
  */
-class ActionListener extends ContainerAware
+class ActionListener implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * @param GetResponseEvent $event
      */
