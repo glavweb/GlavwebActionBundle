@@ -31,8 +31,8 @@ class ActionFormFactory
      */
     public function create($type, $data = null, array $options = array(), array $actionOptions = array())
     {
-        if (!isset($options['intention'])) {
-            $options['intention'] = 'action_button';
+        if (!isset($options['csrf_token_id'])) {
+            $options['csrf_token_id'] = 'action_button';
         }
 
         $form = $this->formFactory->create($type, $data, $options);
