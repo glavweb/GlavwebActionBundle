@@ -46,7 +46,7 @@ class FormAction extends StandardAction
         $success = false;
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $model = $form->getConfig()->getData();
+            $model = $form->getData();
             if ($model) {
                 $em = $this->doctrine->getManager();
                 $em->persist($model);
